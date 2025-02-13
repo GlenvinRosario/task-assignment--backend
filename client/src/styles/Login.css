@@ -70,4 +70,20 @@
   .login-button:hover {
     background-color: #4338ca;
   }
+
+  .register-link {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .register-text {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .register-text:hover {
+    color: darkblue;
+  }
+  
   

@@ -2,7 +2,6 @@ import AxiosInstance from './../util/axios-config'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Search.css";
-import Navbar from '../components/Navbar';
 
 const Search = () => {
   const [query, setQuery] = useState("");
@@ -22,10 +21,10 @@ const Search = () => {
     try {
       const response = await AxiosInstance.get(`/${query}`);
     
-      if(response.data.length>0) {
+      if(response.data.length > 0) {
         setImages(response.data);
-      }else {
-        setError("Image for the Status is Not Present")
+      } else {
+        setError("No images found for this status code.");
       }
       
     } catch (error) {
@@ -68,51 +67,50 @@ const Search = () => {
       setError("Error saving list. Try again.");
     }
   };
-  
-  
-  
 
   return (
-    <>
-
     <div className="search-container">
-      <h2> Search HTTP Status Codes</h2>
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Enter status code (e.g., 203, 2xx, 20x)"
-      />
-      <button onClick={handleSearch} disabled={loading}>
-        {loading ? "Searching..." : "Search"}
-      </button>
+      <h2>🔍 Search HTTP Status Codes</h2>
+
+      <div className="search-box">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Enter status code (e.g., 203, 2xx, 20x)"
+          className="search-input"
+        />
+        <button onClick={handleSearch} disabled={loading} className="search-button">
+          {loading ? <span className="loader"></span> : "Search"}
+        </button>
+      </div>
+
+      {error && <p className="error-message">{error}</p>}
 
       {images.length > 0 && (
-        <>
+        <div className="save-section">
           <input
             type="text"
             value={listName}
             onChange={(e) => setListName(e.target.value)}
             placeholder="Enter list name"
+            className="list-input"
           />
-          <button onClick={handleSave}>Save</button>
-        </>
+          <button onClick={handleSave} className="save-button">Save</button>
+        </div>
       )}
-
-      {error && <p className="error-message">{error}</p>}
 
       <div className="results-grid">
         {images.map((img) => (
-          <div key={img.status_code} className="result-item">
+          <div key={img.status_code} className="result-card">
             <h3>{img.status_code}</h3>
             <img src={img.image.jpg} alt={img.title} className="result-image" />
+            <p>{img.title}</p>
           </div>
         ))}
       </div>
     </div>
-    </>
   );
 };
 
 export default Search;
-
