@@ -2,6 +2,7 @@ import AxiosInstance from './../util/axios-config'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Search.css";
+import Navbar from '../components/Navbar';
 
 const Search = () => {
   const [query, setQuery] = useState("");
@@ -72,6 +73,8 @@ const Search = () => {
   
 
   return (
+    <>
+
     <div className="search-container">
       <h2> Search HTTP Status Codes</h2>
       <input
@@ -107,6 +110,7 @@ const Search = () => {
         ))}
       </div>
     </div>
+    </>
   );
 };
 

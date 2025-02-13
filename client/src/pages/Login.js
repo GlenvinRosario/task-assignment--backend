@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import AxiosInstance from './../util/axios-config'
 import "../styles/Login.css"; 
+import Navbar from "../components/Navbar";
 
 const Login = () => {
   const { setUser } = useContext(AuthContext);
@@ -47,6 +48,7 @@ const Login = () => {
   };
 
   return (
+    <>
     <div className="container">
       <div className="login-box">
         <h2 className="title">Login</h2>
@@ -82,6 +84,7 @@ const Login = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 
