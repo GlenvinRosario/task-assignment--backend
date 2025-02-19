@@ -19,7 +19,7 @@ const Search = () => {
     setImages([]);
 
     try {
-      const response = await axios.get(`http://localhost:5000/api/codes/${query}`);
+      const response = await AxiosInstance.get(`/api/codes/${query}`);
 
       if (response.data.length > 0) {
         setImages(response.data);
