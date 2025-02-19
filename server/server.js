@@ -5,7 +5,8 @@ const cors = require('cors')
 const authRoutes = require("./routes/authRoutes");
 const listRoutes = require("./routes/listRoutes");
 const searchRoutes = require('./routes/search.js')
-const  authenticate = require('./midddleware/authMiddleware.js')
+const  authenticate = require('./midddleware/authMiddleware.js');
+const codeRoutes = require("./routes/codeRoutes.js")
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -23,6 +24,6 @@ mongoose
 app.use("/api/auth", authRoutes); 
 app.use("/", searchRoutes);
 app.use("/api/lists",listRoutes);
-
+app.use("/api/codes", codeRoutes)
 
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

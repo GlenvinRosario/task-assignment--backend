@@ -1,8 +1,8 @@
-import AxiosInstance from './../util/axios-config'
+import AxiosInstance from "./../util/axios-config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Search.css";
-
+import axios from 'axios'
 const Search = () => {
   const [query, setQuery] = useState("");
   const [images, setImages] = useState([]);
@@ -19,14 +19,13 @@ const Search = () => {
     setImages([]);
 
     try {
-      const response = await AxiosInstance.get(`/${query}`);
-    
-      if(response.data.length > 0) {
+      const response = await axios.get(`http://localhost:5000/api/codes/${query}`);
+
+      if (response.data.length > 0) {
         setImages(response.data);
       } else {
         setError("No images found for this status code.");
       }
-      
     } catch (error) {
       console.error("Error fetching images:", error);
       setError("API error, please try again.");
@@ -34,19 +33,19 @@ const Search = () => {
       setLoading(false);
     }
   };
-  
+
   const handleSave = async () => {
     if (!listName) {
       setError("Enter a list name before saving.");
       return;
     }
-  
-    const tokenData = localStorage.getItem("token"); 
+
+    const tokenData = localStorage.getItem("token");
     if (!tokenData) {
       setError("User not authenticated.");
       return;
     }
-  
+
     try {
       await AxiosInstance.post(
         "/save",
@@ -56,11 +55,11 @@ const Search = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${tokenData}`, 
+            Authorization: `Bearer ${tokenData}`,
           },
         }
       );
-  
+
       navigate("/lists");
     } catch (error) {
       console.error("Error saving list:", error.response?.data || error);
@@ -102,10 +101,13 @@ const Search = () => {
 
       <div className="results-grid">
         {images.map((img) => (
-          <div key={img.status_code} className="result-card">
+          <div key={img._id} className="result-card">
             <h3>{img.status_code}</h3>
             <img src={img.image.jpg} alt={img.title} className="result-image" />
             <p>{img.title}</p>
+            <a href={img.url} target="_blank" rel="noopener noreferrer" className="link">
+              View Details
+            </a>
           </div>
         ))}
       </div>
